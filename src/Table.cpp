@@ -12,7 +12,9 @@ Table::Table() {
 
 }
 
-Table::~Table() {
-	// TODO Auto-generated destructor stub
-}
+void draw(){
 
+}
+void setTexture(GLint i){
+
+}

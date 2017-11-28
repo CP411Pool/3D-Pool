@@ -1,6 +1,6 @@
-#include "Sphere.hpp"
+#include "Ball.hpp"
 
-Sphere::Sphere() {
+Ball::Ball() {
 	radius = 1.0, slices = 50, stacks = 50;
 	textureID = 0;
 	this->quad = gluNewQuadric();
@@ -12,10 +12,10 @@ Sphere::Sphere() {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 }
 
-Sphere::~Sphere() {
+Ball::~Ball() {
 }
 
-void Sphere::draw() {
+void Ball::draw() {
 
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, textureID);

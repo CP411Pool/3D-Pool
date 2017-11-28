@@ -1,19 +1,19 @@
-#ifndef SPHERE_H
-#define SPHERE_H
+#ifndef Ball_H
+#define Ball_H
 
 #include <windows.h>
 #include <GL/glut.h>
-#include "../Shape.hpp"
+#include "Shape.hpp"
 
-class Sphere: public Shape {
+class Ball: public Shape {
 public:
 
 	GLfloat radius;
 	GLint slices, stacks;
 	GLuint textureID;
 	GLUquadric *quad;
-	Sphere();
-	~Sphere();
+	Ball();
+	~Ball();
 	void draw();
 };
 

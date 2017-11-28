@@ -15,18 +15,16 @@
 #include "World.hpp"
 #include "Camera.hpp"
 #include "Light.hpp"
-#include "Cue.hpp"
-
-
 #include "pixmap/RGBpixmap.h"
+#include "Player.hpp"
 
 RGBpixmap pix[7];   // make six pixmaps
 World myWorld;
 GLint moving = 0, xBegin = 0;
 Camera myCamera;
 Light myLight;
-Cue playerOne;
-Cue playerTwo;
+Player playerOne;
+Player playerTwo;
 GLint winWidth = 800, winHeight = 800;
 //declare shader program object
 GLuint ProgramObject;

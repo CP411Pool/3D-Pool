@@ -57,7 +57,9 @@ void close(void){
 	exit(1);
 }
 void display(void) {
-
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	myCamera.setProjectionMatrix();  // change to 3D view
+	myWorld.draw_world();//draw table, balls,
 }
 void winReshapeFcn(GLint newWidth, GLint newHeight) {
 	glViewport(0, 0, newWidth, newHeight);

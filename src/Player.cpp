@@ -5,14 +5,14 @@
  *      Author: garre
  */
 
-#include "Cue.hpp"
+#include "Player.hpp"
 
-Cue::Cue() {
+Player::Player() {
 	// TODO Auto-generated constructor stub
 
 }
 
-Cue::~Cue() {
+Player::~Player() {
 	// TODO Auto-generated destructor stub
 }
 

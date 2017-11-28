@@ -1,10 +1,9 @@
 #ifndef CWORLD_HPP
 #define CWORLD_HPP
 
-#include "Cube.hpp"
-#include "Mesh.hpp"
 #include "Light.hpp"
-#include "Planet.hpp"
+#include "Ball.hpp"
+#include "Table.hpp"
 #include <iostream>
 #include <list>
 #include <vector>
@@ -12,7 +11,8 @@
 
 class World {
 public:
-	Shape* list[4];
+	Table* table;
+	Shape* list[15]; //15 balls
 	// std::list<Shape*> ObjectList;
 	// std::vector<Shape*>* ObjectVector;
 
