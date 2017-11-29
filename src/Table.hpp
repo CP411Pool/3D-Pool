@@ -11,7 +11,6 @@
 class Table: public Shape{
 public:
 	Table();
-	virtual ~Table();
 	void setTexture(GLint);
 	void draw();
 };

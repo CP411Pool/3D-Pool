@@ -6,8 +6,8 @@
  */
 #include "MainControl.hpp"
 void init(void){
-	myLight.translate(1.5, 1.5, 1.5);
-	glClearColor(0.0, 0.0, 0.0, 1.0);
+	//myLight.translate(1.5, 1.5, 1.5);
+	glClearColor(0.0, 0.0, 0.0, 0.0);
 
 	// Smooth out lines
 	glEnable(GL_LINE_SMOOTH);
@@ -57,9 +57,8 @@ void close(void){
 	exit(1);
 }
 void display(void) {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	myCamera.setProjectionMatrix();  // change to 3D view
-	myWorld.draw_world();//draw table, balls,
+//	myWorld.draw_world();//draw table, balls,
 }
 void winReshapeFcn(GLint newWidth, GLint newHeight) {
 	glViewport(0, 0, newWidth, newHeight);

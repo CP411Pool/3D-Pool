@@ -12,12 +12,10 @@
 class Player: public Shape {
 public:
 	Ball* sunk[7]; //balls sunk by this player
-	char* name;
 	GLint shots; //counter of shots taken
 	Player();
 	void draw();
 	void setName(char*); //idk how strings work in c++ and am too lazy to google right now
-	virtual ~Player();
 
 };
 

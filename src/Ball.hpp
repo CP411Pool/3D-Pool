@@ -13,7 +13,6 @@ public:
 	GLuint textureID;
 	GLUquadric *quad;
 	Ball();
-	~Ball();
 	void draw();
 };
 
