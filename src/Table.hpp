@@ -11,6 +11,8 @@
 class Table{
 public:
 	Table();
+	GLfloat vertex[8][3];
+	GLint face[6][4];
 	void setTexture(GLint);
 	void draw();
 };

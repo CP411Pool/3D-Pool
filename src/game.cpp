@@ -68,6 +68,7 @@ void display(void) {
 	myCamera.setProjectionMatrix();  // change to 3D view
 //	myWorld.draw_world();//draw table, balls,
 	myTable.draw();
+	glutPostRedisplay();
 	glFlush();
 	glutSwapBuffers();
 
