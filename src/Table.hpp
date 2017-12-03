@@ -8,7 +8,7 @@
 #ifndef TABLE_HPP_
 #define TABLE_HPP_
 
-class Table: public Shape{
+class Table{
 public:
 	Table();
 	void setTexture(GLint);

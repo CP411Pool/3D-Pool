@@ -35,7 +35,6 @@ public:
 	 void rotate_origin(GLfloat rx, GLfloat ry, GLfloat rz, GLfloat angle);// to rotate the origin of MC and keep the vector changed
 	void rotate_relative(double x0, double y0, double z0, double rx, double ry, double rz, double angle);
 	 void draw(){};// draw function must be overwritten
-	 void draw(GLuint){};// draw with texture
 	 void reset();
 };
 

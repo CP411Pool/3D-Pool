@@ -14,6 +14,7 @@ public:
 	GLUquadric *quad;
 	Ball();
 	void draw();
+	void setTexture(GLuint);
 };
 
 #endif

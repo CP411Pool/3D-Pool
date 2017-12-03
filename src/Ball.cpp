@@ -25,4 +25,6 @@ void Ball::draw() {
 
 	glDisable(GL_TEXTURE_2D);
 }
+void Ball::setTexture(GLuint t){
 
+}

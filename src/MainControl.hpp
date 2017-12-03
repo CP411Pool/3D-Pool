@@ -25,6 +25,8 @@ Camera myCamera;
 Light myLight;
 Player playerOne;
 Player playerTwo;
+Table myTable;
+Ball balls[15];
 GLint winWidth = 800, winHeight = 800;
 //declare shader program object
 GLuint ProgramObject;

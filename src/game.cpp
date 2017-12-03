@@ -7,7 +7,7 @@
 #include "MainControl.hpp"
 void init(void){
 	//myLight.translate(1.5, 1.5, 1.5);
-	glClearColor(0.0, 0.0, 0.0, 0.0);
+	glClearColor(0.0, 0.0, 0.0, 1.0);
 
 	// Smooth out lines
 	glEnable(GL_LINE_SMOOTH);
@@ -15,11 +15,17 @@ void init(void){
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glShadeModel(GL_SMOOTH);
+	glEnable(GL_CULL_FACE);
+				glEnable(GL_DEPTH_TEST);
+				glEnable(GL_NORMALIZE);
+				glEnable(GL_LIGHTING);
+				glEnable(GL_LIGHT0);
 
 	//load and set vertex and fragement shader
     //....
 	ProgramObject = InitShader( "vertexshader.txt", "fragmentshader.txt" );
 	glUseProgram(0);
+
 	//set textures for the balls, table n shit
 	/**
 	pix[0].makeCheckerboard();
@@ -57,8 +63,14 @@ void close(void){
 	exit(1);
 }
 void display(void) {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	myCamera.setProjectionMatrix();  // change to 3D view
 //	myWorld.draw_world();//draw table, balls,
+	myTable.draw();
+	glFlush();
+	glutSwapBuffers();
+
 }
 void winReshapeFcn(GLint newWidth, GLint newHeight) {
 	glViewport(0, 0, newWidth, newHeight);
@@ -87,7 +99,7 @@ int main(int argc, char** argv) {
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGB);
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(winWidth, winHeight);
-	glutCreateWindow("A4 reference design (HBF)");
+	glutCreateWindow("3D-Pool");
 	glewInit(); // for using GSLS
 	init();
 	//menu();
