@@ -1,20 +1,19 @@
 #ifndef Ball_H
 #define Ball_H
-
-#include <windows.h>
-#include <GL/glew.h>
-#include <GL/glut.h>
-
-class Ball {
-public:
-
-	GLfloat radius;
-	GLint slices, stacks;
-	GLuint textureID;
-	GLUquadric *quad;
-	Ball();
-	void draw();
-	void setTexture(GLuint);
+#include "vector.hpp"
+class Ball
+{
+	public:
+		Ball();
+		Ball(float radius, int id = -1);
+		int id;
+		float radius;
+		float friction;
+		float bounciness;
+		Vector position;
+		Vector velocity;
+		void setFriction(const float value);
+		void setBounciness(const float value);
 };
 
 #endif
