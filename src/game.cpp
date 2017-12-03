@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "Game.hpp"
-#include "vector.hpp"
+#include "game.hpp"
 #include <time.h>
 
 #define NUM_OF_BALLS 16
@@ -86,9 +85,8 @@ void display()
 	glLoadIdentity();
 
 	glPushMatrix();
-	{
 		drawTable();
-	}
+
 	glPopMatrix();
 
 	glFlush();

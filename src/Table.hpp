@@ -1,6 +1,7 @@
 #ifndef TABLE_HPP
 #define TABLE_HPP
 
+#include <GL/glut.h>
 
 class Table
 {

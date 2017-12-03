@@ -1,5 +1,7 @@
 #ifndef Ball_H
 #define Ball_H
+#include <GL/glut.h>
+
 #include "vector.hpp"
 class Ball
 {

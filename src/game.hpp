@@ -7,10 +7,11 @@
 
 #ifndef GAME_HPP
 #define GAME_HPP
+#include <GL/glut.h>
+
 #include "Ball.hpp"
 #include "Table.hpp"
-#include <GL/glew.h>
-#include <GL/glut.h>
+
 
 const int border = 40;
 const int window_width = 980;
