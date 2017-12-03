@@ -20,7 +20,6 @@ int main( int argc, char* argv[])
 	setupGame();
 
 	glutDisplayFunc(display);
-	glutIdleFunc(update);
 	glutReshapeFunc(reshape);
 	glutMainLoop();
 }
