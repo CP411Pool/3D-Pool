@@ -19,7 +19,6 @@ void Ball::draw() {
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
 	glPushMatrix();
-	this->ctm_multiply();
 	gluSphere(this->quad, radius, slices, stacks);
 	glPopMatrix();
 

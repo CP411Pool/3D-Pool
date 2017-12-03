@@ -4,12 +4,13 @@
  *  Created on: Nov 28, 2017
  *      Author: garre
  */
-#include "Shape.hpp"
 #include "Ball.hpp"
+#include <GL/glew.h>
+#include <GL/glut.h>
 #ifndef SRC_PLAYER_HPP_
 #define SRC_PLAYER_HPP_
 
-class Player: public Shape {
+class Player{
 public:
 	Ball* sunk[7]; //balls sunk by this player
 	GLint shots; //counter of shots taken

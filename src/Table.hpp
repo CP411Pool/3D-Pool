@@ -4,10 +4,10 @@
  *  Created on: Nov 28, 2017
  *      Author: garre
  */
-#include "Shape.hpp"
 #ifndef TABLE_HPP_
 #define TABLE_HPP_
-
+#include <GL/glew.h>
+#include <GL/glut.h>
 class Table{
 public:
 	Table();

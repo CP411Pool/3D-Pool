@@ -7,22 +7,16 @@
 
 #ifndef SRC_MAINCONTROL_HPP_
 #define SRC_MAINCONTROL_HPP_
-#include "glsl/Angel.h"
 #include <GL/glew.h>
 #include <GL/glut.h>
 #include "glaux.h" // for reading bmp files
+#include "Table.hpp"
 
-#include "World.hpp"
-#include "Camera.hpp"
-#include "Light.hpp"
 #include "pixmap/RGBpixmap.h"
 #include "Player.hpp"
 
 RGBpixmap pix[7];   // make six pixmaps
-World myWorld;
 GLint moving = 0, xBegin = 0;
-Camera myCamera;
-Light myLight;
 Player playerOne;
 Player playerTwo;
 Table myTable;

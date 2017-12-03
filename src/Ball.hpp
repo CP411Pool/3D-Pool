@@ -2,10 +2,10 @@
 #define Ball_H
 
 #include <windows.h>
+#include <GL/glew.h>
 #include <GL/glut.h>
-#include "Shape.hpp"
 
-class Ball: public Shape {
+class Ball {
 public:
 
 	GLfloat radius;
