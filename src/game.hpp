@@ -5,11 +5,27 @@
  *      Author: Keega
  */
 
-#ifndef 3D_POOL_SRC_GAME_HPP_
-#define 3D_POOL_SRC_GAME_HPP_
+#ifndef GAME_HPP
+#define GAME_HPP
+#include "Ball.hpp"
+#include "Table.hpp"
+#include <GL/glew.h>
+#include <GL/glut.h>
 
+const int border = 40;
+const int window_width = 980;
+const int window_height = (window_width / 2) + border;
+const float table_length = 2.7f;
 
+const int fps = 25;
 
+void setupGame();
+void initLights(void);
+void setupRenderingContext(void);
+void display(void);;
+void reshape(int width, int height);
+void mouse(int button, int state, int x, int y);
+void motion(int x, int y);
 
 
 #endif /* 3D_POOL_SRC_GAME_HPP_ */
