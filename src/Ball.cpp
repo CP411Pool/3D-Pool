@@ -2,18 +2,7 @@
 #include "Ball.hpp"
 #include <stdio.h>
 
-Ball::Ball() : radius(0.0f), id(-1), position(), velocity(), friction(1.0f), bounciness(1.0f)
+Ball::Ball() :position(), velocity()
 {
-
-}
-
-Ball::Ball(float radius, int id)
-	: radius(radius), id(id), position(), velocity(), friction(1.0f), bounciness(1.0f)
-{
-}
-
-void Ball::setFriction(const float value)
-{
-	friction = value;
 }
 

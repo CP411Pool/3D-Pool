@@ -31,7 +31,7 @@ void setupBalls(GLint radius, int numOfBalls)
 {
 	for (int i = 0; i < numOfBalls; i++)
 	{
-		balls[i] = new Ball(radius, i);
+		balls[i] = new Ball();
 		ballVisible[i] = true;
 	}
 	int x = window_width/3-2*border;
@@ -56,7 +56,7 @@ void setupPockets(float radius, int numOfPockets)
 {
 	for (int i = 0; i < numOfPockets; i++)
 	{
-		pockets[i] = new Ball(radius, i);
+		pockets[i] = new Ball();
 	}
 
 	int x = 0.0f;
