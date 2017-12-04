@@ -17,6 +17,8 @@ const int border = 40;
 const int window_width = 980;
 const int window_height = (window_width / 2) + border;
 const float table_length = 2.7f;
+const float ball_radius = 0.028575f;
+const float pocket_radius = 0.055f;
 
 const int fps = 25;
 
