@@ -17,8 +17,3 @@ void Ball::setFriction(const float value)
 	friction = value;
 }
 
-void Ball::setBounciness(const float value)
-{
-	bounciness = value;
-}
-

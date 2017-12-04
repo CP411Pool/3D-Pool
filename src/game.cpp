@@ -5,16 +5,14 @@
 #include <time.h>
 #include <GL/glut.h>
 
-#define NUM_OF_BALLS 16
-#define NUM_OF_POCKETS 6
+
 
 GLfloat winWidth = window_width - 2 * border;
 GLfloat winHeight = window_height - 2 * border;
 GLint length=winWidth,width=winWidth/2;
 GLfloat xBorder2=winWidth+border, yBorder2=winHeight+border;
 Table *table;
-Ball *balls[NUM_OF_BALLS];
-Ball *pockets[NUM_OF_POCKETS];
+
 bool ballVisible[NUM_OF_BALLS];
 
 void setupTable(float length)
@@ -180,32 +178,13 @@ void setupGame()
 
 	setupBalls(radius, NUM_OF_BALLS);
 	setupPockets(pocket_radius, NUM_OF_POCKETS);
-
 }
-void initLights()
-{
-	GLfloat ambient[] = {0.2, 0.2, 0.2, 1.0};
-	GLfloat position[] = {0.0, 0.0, 2.0, 1.0};
-	GLfloat mat_diffuse[] = {0.6, 0.6, 0.6, 1.0};
-	GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
-	GLfloat mat_shininess[] = {50.0};
 
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-
-	glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
-	glLightfv(GL_LIGHT0, GL_POSITION, position);
-
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
-}
 void mouseAction(GLint button, GLint state, GLint xMouse, GLint yMouse) {
-
+	xBegin=xMouse;
+	yBegin=yMouse;
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
 		moving = 1;
-	//	xBegin = xMouse;
-	//	yBegin = yMouse;
 
 	}
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
@@ -222,35 +201,21 @@ void setPixel(GLint x, GLint y){
 	glEnd();
 	//glutPostRedisplay();
 }
-void drawLine(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2) {
-	static const double TWOPI = 6.2831853071795865;
-	    double theta = atan2(y2-y1, x2 - x1);
-	    if (theta < 0.0)
-	        theta += TWOPI;
-	GLfloat angle=theta;
-	GLfloat x0,y0,d=30;
-	GLfloat s = sin(angle);
-		GLfloat c = cos(angle);
-	x0=x2-c*d;
-	y0=y2-s*d;
-	glLineWidth(3.0f);
-		glBegin(GL_LINES);
-		glVertex2f(x1,y1);
-		glVertex2f(x0,y0);
-		glEnd();
-		glutPostRedisplay();
+
+void movement(void){
+
 }
 void mouseMotion(GLint x, GLint y) {
+	if(onTable(x,y)==true){
+				xBegin=x;
+				yBegin=y;
+	}
 	if (moving) {
 
 		//comment
 		if(onTable(x,y)==true){
 			xBegin=x;
 			yBegin=y;
-		//	glPushMatrix();
-		//	glColor3f(1.0,0.0,0.0);
-
-		//	drawLine(balls[0]->position.x,balls[0]->position.y,x,y);
 
 		}
 	}
@@ -265,12 +230,16 @@ void display()
 	drawTable();
 		drawBalls();
 		drawPockets();
-	if(moving){
 		printf("x:%f,y:%f",xBegin,yBegin);
-		drawLine(xBegin,yBegin,balls[0]->position.x,balls[0]->position.y);
+		if(xBegin!=0 && !moving){
+			cue.draw(*balls[0],xBegin,yBegin);
+		}
+		if(moving){
+
+		}
 
 
-	}
+
 
 	glFlush();
 	glutSwapBuffers();
@@ -297,7 +266,7 @@ int main( int argc, char** argv)
 	init();
 
 	glutDisplayFunc(display);
-	glutMotionFunc(mouseMotion);
+	glutPassiveMotionFunc(mouseMotion);
 	glutMouseFunc(mouseAction);
 	//glutReshapeFunc(reshape);
 	glutMainLoop();
