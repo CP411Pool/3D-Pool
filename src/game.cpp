@@ -123,7 +123,7 @@ void drawBalls()
 				glColor3f(0,0,1);
 			}
 			else if(i == 3 || i == 11){
-				glColor3f(1.0,0.5,0.5);
+				glColor3f(0.8,0.5,0.2);
 			}else if(i == 4 || i == 12){
 				glColor3f(0,1,1);
 			}else if(i == 5 || i == 13){
