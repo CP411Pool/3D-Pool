@@ -17,10 +17,6 @@ Table *table;
 Ball *balls[NUM_OF_BALLS];
 Ball *pockets[NUM_OF_POCKETS];
 bool ballVisible[NUM_OF_BALLS];
-GLfloat white[] = {1, 1, 1, 1};
-GLfloat red[] = {1, 0, 0, 1};
-GLfloat black[] = {0,0,0,1};
-
 
 void setupTable(float length)
 {
@@ -89,7 +85,7 @@ void drawTable(){
 	glPushMatrix();
 	{
 		glTranslatef(border, border, 0);
-		glColor3f(0, 1, 0);
+		glColor3f(0, 0.5, 0);
 		glRectf(0, 0, xBorder2, yBorder2);
 
 	}
@@ -121,9 +117,26 @@ void drawBalls()
 						border + balls[i]->position.y * meter_to_coord, 0.0f);
 
 			if (i == 0)
-				glColor4fv(white);
-			else
-				glColor4fv(red);
+				glColor3f(1,1,1);
+			else if(i == 1 || i == 9){
+				glColor3f(1,1,0);
+			}
+			else if(i == 2 || i == 10){
+				glColor3f(0,0,1);
+			}
+			else if(i == 3 || i == 11){
+				glColor3f(1.0,0.5,0.5);
+			}else if(i == 4 || i == 12){
+				glColor3f(0,1,1);
+			}else if(i == 5 || i == 13){
+				glColor3f(1,0.5,1);
+			}else if(i == 6 || i == 14){
+				glColor3f(0.5,1,0.5);
+			}else if(i == 7 || i == 15){
+				glColor3f(1,0,0);
+			}else if(i == 8){
+				glColor3f(0,0,0);
+			}
 
 			drawCircle(converted_ball_radius);
 		}
@@ -140,7 +153,7 @@ void drawPockets()
 			glTranslatef(border + pockets[i]->position.x * meter_to_coord,
 						border + pockets[i]->position.y * meter_to_coord, 0.0f);
 
-			glColor4fv(black);
+			glColor3f(0,0,0);
 
 			drawCircle(converted_pocket_radius);
 		}
