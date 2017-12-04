@@ -12,7 +12,7 @@
 
 class Vector {
  public:
-	GLint x,y,z; 			//the coordinates
+	GLfloat x,y,z; 			//the coordinates
 	Vector();
 	Vector(GLfloat dx, GLfloat dy, GLfloat dz);
 	void set(GLfloat dx, GLfloat yy, GLfloat dz);

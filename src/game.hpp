@@ -14,13 +14,13 @@
 
 
 const int border = 40;
-const int window_width = 980;
-const int window_height = (window_width / 2) + border;
+GLint window_width = 980;
+GLint window_height = (window_width / 2) + border;
 float radius = 12;
 float pocket_radius = 20;
 bool isMoving = false;
-GLint moving = 0,xBorder1=0,yBorder1=0;
-GLint xBegin,yBegin;
+GLint moving = 0,xBorder1=40,yBorder1=40;
+GLfloat xBegin,yBegin;
 void setupGame();
 void initLights(void);
 void setupRenderingContext(void);

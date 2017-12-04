@@ -8,9 +8,10 @@
 #define NUM_OF_BALLS 16
 #define NUM_OF_POCKETS 6
 
-GLfloat xBorder2 = window_width - 2 * border;
-GLfloat yBorder2 = window_height - 2 * border;
-GLint length=xBorder2,width=xBorder2/2;
+GLfloat winWidth = window_width - 2 * border;
+GLfloat winHeight = window_height - 2 * border;
+GLint length=winWidth,width=winWidth/2;
+GLfloat xBorder2=winWidth+border, yBorder2=winHeight+border;
 Table *table;
 Ball *balls[NUM_OF_BALLS];
 Ball *pockets[NUM_OF_POCKETS];
@@ -22,7 +23,7 @@ void setupTable(float length)
 
 }
 bool onTable(GLint x, GLint y){
-	if(x>0 && y>0 && x <xBorder2 && y <yBorder2){
+	if(x>xBorder1 && y>yBorder1 && x <xBorder2 && y <yBorder2){
 		return true;
 	}else{
 		return false;
@@ -80,13 +81,13 @@ void setupPockets(float radius, int numOfPockets)
 void drawTable(){
 	glPushMatrix();
 	glColor3f(0.545, 0.271, 0.075);
-	glRectf(0,0,xBorder2*1.5, yBorder2*1.5);
+	glRectf(0,0,winWidth*1.5, winHeight*1.5);
 	glPopMatrix();
 	glPushMatrix();
 
 		glTranslatef(border, border, 0);
 		glColor3f(0, 0.5, 0);
-		glRectf(0, 0, xBorder2, yBorder2);
+		glRectf(0, 0, winWidth, winHeight);
 
 
 	glPopMatrix();
@@ -168,7 +169,7 @@ void init()
 {
 	glClearColor(1.0,1.0,1.0,0.0);
 	glMatrixMode(GL_PROJECTION);
-	gluOrtho2D(0.0f, window_width, window_height, 0.0f);
+	gluOrtho2D(0.0, window_width, window_height, 0.0);
 	glFlush();
 	setupGame();
 
@@ -221,32 +222,23 @@ void setPixel(GLint x, GLint y){
 	glEnd();
 	//glutPostRedisplay();
 }
-void drawLine(GLint x1, GLint y1, GLint x2, GLint y2) {
-	GLint dx=abs(x2-x1),dy=abs(y2-y1);
-	GLint p= dy+dy-dx;
-	GLint twoDy = 2*dy,twoDyMinusDx = dy+dy-dx-dx;
-	GLint x,y;
-	if(x1>x2){
-		x=x2;
-		y=y2;
-		x2=x1;
-	}else{
-		x=x1;
-		y=y1;
-	}
-	setPixel(x,y);
-	while(x<x2){
-		x++;
-		if(p>0){
-			y++;
-			p+=twoDyMinusDx;
-		}else{
-			p+=twoDy;
-		}
-		setPixel(x,y);
-	}
-	glutPostRedisplay();
-
+void drawLine(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2) {
+	static const double TWOPI = 6.2831853071795865;
+	    double theta = atan2(y2-y1, x2 - x1);
+	    if (theta < 0.0)
+	        theta += TWOPI;
+	GLfloat angle=theta;
+	GLfloat x0,y0,d=30;
+	GLfloat s = sin(angle);
+		GLfloat c = cos(angle);
+	x0=x2-c*d;
+	y0=y2-s*d;
+	glLineWidth(3.0f);
+		glBegin(GL_LINES);
+		glVertex2f(x1,y1);
+		glVertex2f(x0,y0);
+		glEnd();
+		glutPostRedisplay();
 }
 void mouseMotion(GLint x, GLint y) {
 	if (moving) {
@@ -257,14 +249,12 @@ void mouseMotion(GLint x, GLint y) {
 			yBegin=y;
 		//	glPushMatrix();
 		//	glColor3f(1.0,0.0,0.0);
-			printf("x:%d,y:%d,ballx:%d,bally:%d\n",xBegin,yBegin,balls[0]->position.x,balls[0]->position.y);
 
 		//	drawLine(balls[0]->position.x,balls[0]->position.y,x,y);
 
 		}
 	}
-	//glClear(GL_COLOR_BUFFER_BIT);
-	glPopMatrix();
+
 	glutPostRedisplay();
 }
 
@@ -276,15 +266,26 @@ void display()
 		drawBalls();
 		drawPockets();
 	if(moving){
-		drawLine(balls[0]->position.x,balls[0]->position.y,xBegin,yBegin);
+		printf("x:%f,y:%f",xBegin,yBegin);
+		drawLine(xBegin,yBegin,balls[0]->position.x,balls[0]->position.y);
+
+
 	}
+
 	glFlush();
 	glutSwapBuffers();
 }
 
-void reshape(int width, int height)
+void reshape(GLint newWidth, GLint newHeight)
 {
-
+	glViewport(0, 0, newWidth, newHeight);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(0.0, GLdouble(newWidth), GLdouble(newHeight), 0.0);
+	/* Reset display-window size parameters. */
+	window_width = newWidth;
+	window_height = newHeight;
+	glFlush();
 }
 int main( int argc, char** argv)
 {
