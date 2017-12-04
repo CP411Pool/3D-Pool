@@ -7,11 +7,11 @@
 #define NUM_OF_BALLS 16
 #define NUM_OF_POCKETS 6
 
-const float converted_table_length = window_width - 2 * border;
-const float converted_table_width = window_height - 2 * border;
-const float meter_to_coord = converted_table_length/table_length;
-const float converted_ball_radius = ball_radius * meter_to_coord;
-const float converted_pocket_radius = pocket_radius * meter_to_coord;
+GLfloat xBorder2 = window_width - 2 * border;
+float yBorder2 = window_height - 2 * border;
+float meter_to_coord = xBorder2/table_length;
+float converted_ball_radius = ball_radius * meter_to_coord;
+float converted_pocket_radius = pocket_radius * meter_to_coord;
 const float degree_to_radian = 3.14159265f/180.f;
 Table *table;
 Ball *balls[NUM_OF_BALLS];
@@ -22,11 +22,10 @@ GLfloat red[] = {1, 0, 0, 1};
 GLfloat black[] = {0,0,0,1};
 
 
-
-
 void setupTable(float length)
 {
 	table = new Table(length);
+
 }
 void setupBalls(float radius, int numOfBalls)
 {
@@ -85,13 +84,13 @@ void setupPockets(float radius, int numOfPockets)
 void drawTable(){
 	glPushMatrix();
 	glColor3f(0.545, 0.271, 0.075);
-	glRectf(0,0,converted_table_length*1.5, converted_table_width*1.5);
+	glRectf(0,0,xBorder2*1.5, yBorder2*1.5);
 			glPopMatrix();
 	glPushMatrix();
 	{
 		glTranslatef(border, border, 0);
 		glColor3f(0, 1, 0);
-		glRectf(0, 0, converted_table_length, converted_table_width);
+		glRectf(0, 0, xBorder2, yBorder2);
 
 	}
 	glPopMatrix();
@@ -173,6 +172,7 @@ void setupRenderingContext()
 void setupGame()
 {
 	setupTable(table_length);
+
 	setupBalls(ball_radius, NUM_OF_BALLS);
 	setupPockets(pocket_radius, NUM_OF_POCKETS);
 }
@@ -194,7 +194,26 @@ void initLights()
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 }
+void mouseAction(int button, int state, int x, int y) {
 
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && isMoving==false) {
+		moving = 1;
+		xBegin = x;
+	}
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+		moving = 0;
+	}
+
+
+	glutPostRedisplay();
+}
+void mouseMotion(GLint x, GLint y) {
+	GLfloat rx, ry, rz, theta;
+
+	if (moving) {
+
+	}
+}
 
 void display()
 {
@@ -218,5 +237,23 @@ void reshape(int width, int height)
 {
 
 }
+int main( int argc, char* argv[])
+{
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
+	glutInitWindowSize(window_width, window_height);
+
+	glutCreateWindow("Billiard");
+	setupRenderingContext();
+	setupGame();
+
+	glutDisplayFunc(display);
+	glutMotionFunc(mouseMotion);
+	glutMouseFunc(mouseAction);
+	glutReshapeFunc(reshape);
+	glutMainLoop();
+}
+
+
 
 

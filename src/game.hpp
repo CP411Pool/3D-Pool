@@ -19,16 +19,15 @@ const int window_height = (window_width / 2) + border;
 const float table_length = 2.7f;
 const float ball_radius = 0.028575f;
 const float pocket_radius = 0.055f;
-
-const int fps = 25;
-
+bool isMoving = false;
+GLint moving = 0, xBegin = 0,xBorder1=0,yBorder1=0;
 void setupGame();
 void initLights(void);
 void setupRenderingContext(void);
 void display(void);;
 void reshape(int width, int height);
-void mouse(int button, int state, int x, int y);
-void motion(int x, int y);
+void mouseAction(int button, int state, int x, int y);
+void mouseMotion(int x, int y);
 
 
 #endif /* 3D_POOL_SRC_GAME_HPP_ */
