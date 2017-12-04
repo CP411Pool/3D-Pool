@@ -12,7 +12,7 @@
 
 class Vector {
  public:
-	GLfloat x,y,z; 			//the coordinates
+	GLint x,y,z; 			//the coordinates
 	Vector();
 	Vector(GLfloat dx, GLfloat dy, GLfloat dz);
 	void set(GLfloat dx, GLfloat yy, GLfloat dz);
@@ -23,6 +23,7 @@ class Vector {
 	GLfloat dot(Vector b); 	//return this dotted with b
 	void build4tuple(GLfloat v[]); //v[0]=x,v[1]=y,v[2]=z,v[3]=0 for homogeneous
 	void printVector();
+
 };
 
 #endif

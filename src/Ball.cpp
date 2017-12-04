@@ -4,6 +4,7 @@
 
 Ball::Ball() : radius(0.0f), id(-1), position(), velocity(), friction(1.0f), bounciness(1.0f)
 {
+
 }
 
 Ball::Ball(float radius, int id)

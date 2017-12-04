@@ -3,16 +3,14 @@
 #include <math.h>
 #include "game.hpp"
 #include <time.h>
+#include <GL/glut.h>
 
 #define NUM_OF_BALLS 16
 #define NUM_OF_POCKETS 6
 
 GLfloat xBorder2 = window_width - 2 * border;
-float yBorder2 = window_height - 2 * border;
-float meter_to_coord = xBorder2/table_length;
-float converted_ball_radius = ball_radius * meter_to_coord;
-float converted_pocket_radius = pocket_radius * meter_to_coord;
-const float degree_to_radian = 3.14159265f/180.f;
+GLfloat yBorder2 = window_height - 2 * border;
+GLint length=xBorder2,width=xBorder2/2;
 Table *table;
 Ball *balls[NUM_OF_BALLS];
 Ball *pockets[NUM_OF_POCKETS];
@@ -23,33 +21,35 @@ void setupTable(float length)
 	table = new Table(length);
 
 }
-void setupBalls(float radius, int numOfBalls)
+bool onTable(GLint x, GLint y){
+	if(x>0 && y>0 && x <xBorder2 && y <yBorder2){
+		return true;
+	}else{
+		return false;
+	}
+}
+void setupBalls(GLint radius, int numOfBalls)
 {
 	for (int i = 0; i < numOfBalls; i++)
 	{
 		balls[i] = new Ball(radius, i);
 		ballVisible[i] = true;
 	}
+	int x = window_width/3-2*border;
+	int y = 245;
+	balls[0]->position.set(x, y, 0);
 
-	radius += 0.0005f;
-
-	const float root_three = sqrt(3);
-	float x = table->length/4;
-	float y = table->length/4;
-	balls[0]->position.set(x, y, 0.0f);
-
-	x = x * 3;
+	x = x * 3-80;
 	int counter = 0;
 	for (int i = 1; i < numOfBalls; i++)
 	{
-		if (i == 2 || i == 4 || i == 7 || i == 11)
-		{
-			x = x + root_three * radius;
-			y = y - radius;
+		if (i == 2 || i == 4 || i == 7 || i == 11){
+			x = x +radius*2;
+			y=y-radius;
 			counter = 0;
 		}
 
-		balls[i]->position.set(x, y + 2 * counter * radius, 0.0f);
+		balls[i]->position.set(x, y + 2 * counter * radius+2*radius, 0);
 		counter++;
 	}
 }
@@ -60,19 +60,19 @@ void setupPockets(float radius, int numOfPockets)
 		pockets[i] = new Ball(radius, i);
 	}
 
-	float x = 0.0f;
-	float y = 0.0f;
+	int x = 0.0f;
+	int y = 0.0f;
 
 	for (int i = 0; i < numOfPockets; i++)
 	{
 		if (i == 3)
 		{
-			x = 0.0f;
-			y = table->width;
+			x = 0;
+			y = width;
 		}
 
-		pockets[i]->position.set(x, y, 0.0f);
-		x = x + table->width;
+		pockets[i]->position.set(x, y, 0);
+		x = x + width;
 	}
 
 
@@ -81,23 +81,23 @@ void drawTable(){
 	glPushMatrix();
 	glColor3f(0.545, 0.271, 0.075);
 	glRectf(0,0,xBorder2*1.5, yBorder2*1.5);
-			glPopMatrix();
+	glPopMatrix();
 	glPushMatrix();
-	{
+
 		glTranslatef(border, border, 0);
 		glColor3f(0, 0.5, 0);
 		glRectf(0, 0, xBorder2, yBorder2);
 
-	}
+
 	glPopMatrix();
 }
 
-void drawCircle(float radius){
+void drawCircle(int radius){
    glBegin(GL_POLYGON);
 
    for (int i=0; i<360; i++)
    {
-      float newDeg = i*degree_to_radian;
+      float newDeg = i*radius; //FIX
       glVertex2f(cos(newDeg)*radius, sin(newDeg)*radius);
    }
 
@@ -113,8 +113,7 @@ void drawBalls()
 		}
 		glPushMatrix();
 		{
-			glTranslatef(border + balls[i]->position.x * meter_to_coord,
-						border + balls[i]->position.y * meter_to_coord, 0.0f);
+			glTranslatef(balls[i]->position.x,balls[i]->position.y, 0.0f);
 
 			if (i == 0)
 				glColor3f(1,1,1);
@@ -138,7 +137,7 @@ void drawBalls()
 				glColor3f(0,0,0);
 			}
 
-			drawCircle(converted_ball_radius);
+			drawCircle(radius);
 		}
 		glPopMatrix();
 	}
@@ -150,12 +149,12 @@ void drawPockets()
 	{
 		glPushMatrix();
 		{
-			glTranslatef(border + pockets[i]->position.x * meter_to_coord,
-						border + pockets[i]->position.y * meter_to_coord, 0.0f);
+			glTranslatef(border + pockets[i]->position.x ,
+						border + pockets[i]->position.y , 0.0f);
 
 			glColor3f(0,0,0);
 
-			drawCircle(converted_pocket_radius);
+			drawCircle(pocket_radius);
 		}
 		glPopMatrix();
 	}
@@ -165,29 +164,22 @@ void resetGame()
 	setupGame();
 }
 
-void setupRenderingContext()
+void init()
 {
+	glClearColor(1.0,1.0,1.0,0.0);
 	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	glOrtho(0.0f, window_width, window_height, 0.0f, 0.0f, 1.0f);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	glDisable(GL_DEPTH_TEST);
-	glShadeModel(GL_SMOOTH);
-	glEnable(GL_LINE_SMOOTH);
-	glClearColor(0.0, 0.0, 0.0, 0.0);
+	gluOrtho2D(0.0f, window_width, window_height, 0.0f);
+	glFlush();
+	setupGame();
 
 }
 
 void setupGame()
 {
-	setupTable(table_length);
 
-	setupBalls(ball_radius, NUM_OF_BALLS);
+	setupBalls(radius, NUM_OF_BALLS);
 	setupPockets(pocket_radius, NUM_OF_POCKETS);
+
 }
 void initLights()
 {
@@ -207,11 +199,13 @@ void initLights()
 	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
 	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 }
-void mouseAction(int button, int state, int x, int y) {
+void mouseAction(GLint button, GLint state, GLint xMouse, GLint yMouse) {
 
-	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && isMoving==false) {
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
 		moving = 1;
-		xBegin = x;
+	//	xBegin = xMouse;
+	//	yBegin = yMouse;
+
 	}
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
 		moving = 0;
@@ -220,28 +214,70 @@ void mouseAction(int button, int state, int x, int y) {
 
 	glutPostRedisplay();
 }
-void mouseMotion(GLint x, GLint y) {
-	GLfloat rx, ry, rz, theta;
-
-	if (moving) {
-		//comment
+void setPixel(GLint x, GLint y){
+	glPointSize(2.0);
+	glBegin(GL_POINTS);
+	glVertex2i(x,y);
+	glEnd();
+	//glutPostRedisplay();
+}
+void drawLine(GLint x1, GLint y1, GLint x2, GLint y2) {
+	GLint dx=abs(x2-x1),dy=abs(y2-y1);
+	GLint p= dy+dy-dx;
+	GLint twoDy = 2*dy,twoDyMinusDx = dy+dy-dx-dx;
+	GLint x,y;
+	if(x1>x2){
+		x=x2;
+		y=y2;
+		x2=x1;
+	}else{
+		x=x1;
+		y=y1;
 	}
+	setPixel(x,y);
+	while(x<x2){
+		x++;
+		if(p>0){
+			y++;
+			p+=twoDyMinusDx;
+		}else{
+			p+=twoDy;
+		}
+		setPixel(x,y);
+	}
+	glutPostRedisplay();
+
+}
+void mouseMotion(GLint x, GLint y) {
+	if (moving) {
+
+		//comment
+		if(onTable(x,y)==true){
+			xBegin=x;
+			yBegin=y;
+		//	glPushMatrix();
+		//	glColor3f(1.0,0.0,0.0);
+			printf("x:%d,y:%d,ballx:%d,bally:%d\n",xBegin,yBegin,balls[0]->position.x,balls[0]->position.y);
+
+		//	drawLine(balls[0]->position.x,balls[0]->position.y,x,y);
+
+		}
+	}
+	//glClear(GL_COLOR_BUFFER_BIT);
+	glPopMatrix();
+	glutPostRedisplay();
 }
 
 void display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	glPushMatrix();{
-		drawTable();
-		drawPockets();
+	drawTable();
 		drawBalls();
+		drawPockets();
+	if(moving){
+		drawLine(balls[0]->position.x,balls[0]->position.y,xBegin,yBegin);
 	}
-	glPopMatrix();
-
 	glFlush();
 	glutSwapBuffers();
 }
@@ -250,20 +286,19 @@ void reshape(int width, int height)
 {
 
 }
-int main( int argc, char* argv[])
+int main( int argc, char** argv)
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 	glutInitWindowSize(window_width, window_height);
 
 	glutCreateWindow("Billiard");
-	setupRenderingContext();
-	setupGame();
+	init();
 
 	glutDisplayFunc(display);
 	glutMotionFunc(mouseMotion);
 	glutMouseFunc(mouseAction);
-	glutReshapeFunc(reshape);
+	//glutReshapeFunc(reshape);
 	glutMainLoop();
 }
 
