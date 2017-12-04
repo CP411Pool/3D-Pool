@@ -19,6 +19,7 @@ Ball *pockets[NUM_OF_POCKETS];
 bool ballVisible[NUM_OF_BALLS];
 GLfloat white[] = {1, 1, 1, 1};
 GLfloat red[] = {1, 0, 0, 1};
+GLfloat black[] = {0,0,0,1};
 
 
 
@@ -97,7 +98,7 @@ void drawTable(){
 }
 
 void drawCircle(float radius){
-   glBegin(GL_LINE_LOOP);
+   glBegin(GL_POLYGON);
 
    for (int i=0; i<360; i++)
    {
@@ -140,7 +141,7 @@ void drawPockets()
 			glTranslatef(border + pockets[i]->position.x * meter_to_coord,
 						border + pockets[i]->position.y * meter_to_coord, 0.0f);
 
-			glColor4fv(white);
+			glColor4fv(black);
 
 			drawCircle(converted_pocket_radius);
 		}
