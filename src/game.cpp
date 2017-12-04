@@ -211,7 +211,7 @@ void mouseMotion(GLint x, GLint y) {
 	GLfloat rx, ry, rz, theta;
 
 	if (moving) {
-
+		//comment
 	}
 }
 
