@@ -83,10 +83,15 @@ void setupPockets(float radius, int numOfPockets)
 }
 void drawTable(){
 	glPushMatrix();
+	glColor3f(0.545, 0.271, 0.075);
+	glRectf(0,0,converted_table_length*1.5, converted_table_width*1.5);
+			glPopMatrix();
+	glPushMatrix();
 	{
 		glTranslatef(border, border, 0);
 		glColor3f(0, 1, 0);
 		glRectf(0, 0, converted_table_length, converted_table_width);
+
 	}
 	glPopMatrix();
 }
