@@ -199,7 +199,9 @@ void checkCollisions(){
 	}
 }
 void strikeBall(){
-	Vector cueVel = balls[0]->position;
+	Vector cueVel;
+	cueVel.x= balls[0]->position.x-cue.x;
+	cueVel.y=balls[0]->position.y-cue.y;
 			//Vector(position.x, table.heigh + balls[0]->radius, position.z);
 	cueVel.normalize();
 	cueVel.x = cueVel.x* (float)(force/100);
