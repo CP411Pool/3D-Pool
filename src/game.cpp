@@ -193,6 +193,21 @@ void drawPockets()
 	}
 
 }
+
+bool isBallInPocket(){
+	for(int i = 0; i < NUM_OF_POCKETS; i++){
+		for(int j = 1; j < NUM_OF_BALLS; j++){
+			float length = pockets[i]->position.distance(balls[j]->position);
+			if(length < (pockets[i]->radius + balls[j]->radius)){
+				return true;
+			}else{
+				return false;
+			}
+		}
+
+	}
+}
+
 void resolveTable(Ball *ball){
 	if ( ball->hitLeft() ){
 			ball->velocity.x = -ball->velocity.x;
@@ -227,14 +242,14 @@ void checkCollisions(){
 		if ( !balls[i]->isInHole ) resolveTable(balls[i]);
 	}
 }
-
 void strikeBall(){
 	Vector cueVel;
 	cueVel.x= balls[0]->position.x-cue.x;
 	cueVel.y=balls[0]->position.y-cue.y;
 	cueVel.normalize();
-	cueVel.x = cueVel.x* (GLfloat)3.0;
-	cueVel.y = cueVel.y* (GLfloat)3.0;
+	cueVel.x = cueVel.x* (GLfloat)(force/100);
+	cueVel.y = cueVel.y* (GLfloat)(force/100);
+	cueVel.z = cueVel.z* (GLfloat)(force/100);
 	balls[0]->velocity = cueVel;
 	balls[0]->dt=balls[0]->velocity.length();
 }
@@ -328,7 +343,11 @@ void display()
 	drawTable();
 		drawBalls();
 		drawPockets();
+		if(xBegin!=0 && !isMoving){
 			cue.draw(*balls[0],xBegin,yBegin);
+		}else{
+
+		}
 
 
 
