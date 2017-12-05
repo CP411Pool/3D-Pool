@@ -143,7 +143,7 @@ void drawBalls()
 	}
 }
 void update(){
-	float dt= 0.05;
+	float dt= 1.3f;
 	for (int i=0; i<NUM_OF_BALLS; ++i){
 		if ( balls[i]->velocity.length() < 0.02){
 			balls[i]->velocity.x = 0.0;
@@ -188,6 +188,25 @@ void drawPockets()
 	}
 
 }
+void resolveTable(Ball *ball){
+	if ( ball->hitLeft() ){
+			ball->velocity.x = -ball->velocity.x;
+			ball->position.x = xBorder1 + ball->radius;
+		} else
+		if ( ball->hitRight()){
+			ball->velocity.x = -ball->velocity.x;
+			ball->position.x = xBorder2 - ball->radius;
+		}
+
+		if ( ball->hitTop()){
+			ball->velocity.y = -ball->velocity.y;
+			ball->position.y = yBorder2 + ball->radius;
+		} else
+		if (ball->hitBot()){
+			ball->velocity.y = -ball->velocity.y;
+			ball->position.y = yBorder1 - ball->radius;
+		}
+}
 void checkCollisions(){
 	for (int i=0; i< NUM_OF_BALLS; ++i){
 		for (int j=i+1; j< NUM_OF_BALLS; ++j){
@@ -195,9 +214,10 @@ void checkCollisions(){
 				balls[i]->resolve(balls[j]);
 			}
 		}
-		//if ( !balls[i]->isInHole ) table.resToBallHitTable(balls[i]);
+		if ( !balls[i]->isInHole ) resolveTable(balls[i]);
 	}
 }
+
 void strikeBall(){
 	Vector cueVel;
 	cueVel.x= balls[0]->position.x-cue.x;

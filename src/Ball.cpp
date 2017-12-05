@@ -57,3 +57,31 @@ void Ball::resolve(Ball* b){
 	b->position.z=b->position.z-normal.z*tmp;
 
 }
+bool Ball::hitLeft(){
+	if(this->position.x < this->xBorder+this->radius){
+		return true;
+	}else{
+		return false;
+	}
+}
+bool Ball::hitRight(){
+	if(this->position.x>this->xBorder1-this->radius){
+		return true;
+	}else{
+		return false;
+	}
+}
+bool Ball::hitTop(){
+	if(this->position.y > this->yBorder1+this->radius){
+		return true;
+	}else{
+		return false;
+	}
+}
+bool Ball::hitBot(){
+	if(this->position.y <this->yBorder-this->radius){
+		return true;
+	}else{
+		return false;
+	}
+}
