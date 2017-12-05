@@ -11,7 +11,7 @@ Ball::Ball()
 	this->xBorder1=940;
 	this->yBorder1=490;
 	this->dt=1.0;
-	this->lastFrame=0;//ok
+	this->lastFrame=0.0;//ok
 }
 bool Ball::isBallHit(Ball* b){
 	GLfloat length = this->position.distance(b->position);
@@ -63,6 +63,7 @@ void Ball::resolve(Ball* b){
 	b->position.z=b->position.z-normal.z*tmp;
 
 }
+
 bool Ball::hitLeft(){
 	if(this->position.x < this->xBorder+this->radius){
 		return true;

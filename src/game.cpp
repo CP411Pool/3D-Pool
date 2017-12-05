@@ -148,35 +148,32 @@ void drawBalls()
 	}
 }
 void update(){
-	float dt,d;
-	dt=0.05;
-	for (int i=0; i<NUM_OF_BALLS; ++i){
 
-		dt=balls[i]->velocity.length();
-		if ( dt< 0.02){
+	GLfloat dt,d;
+	for (int i=0; i<NUM_OF_BALLS; ++i){
+		dt=balls[i]->dt;
+		d=balls[i]->velocity.length();
+		printf("ball vel %d vel%f\n",i,balls[i]->dt);
+		if ( balls[i]->velocity.length() < 0.02){
 			balls[i]->velocity.x = 0.0;
 		balls[i]->velocity.y = 0.0;
-		balls[i]->velocity.z = 0.0;
 		}
+
 		else {
 			balls[i]->velocity.normalize();
 			Vector acc;
 			acc.x = balls[i]->velocity.x*-0.1f;
 			acc.y = balls[i]->velocity.y*-0.1f;
-			acc.z = balls[i]->velocity.z*-0.1f;
 			balls[i]->velocity.x = balls[i]->velocity.x + acc.x*dt;
 			balls[i]->velocity.y = balls[i]->velocity.y + acc.y*dt;
-			balls[i]->velocity.z = balls[i]->velocity.z + acc.z*dt;
 
 		}
-		if (balls[i]->position.y>40.0){
+
+
 			balls[i]->position.x = balls[i]->position.x +  balls[i]->velocity.x*dt;
 			balls[i]->position.y = balls[i]->position.y +  balls[i]->velocity.y*dt;
-			balls[i]->position.z = balls[i]->position.z +  balls[i]->velocity.z*dt;
-		}
 
-
-
+		balls[i]->dt=balls[i]->velocity.length()+dt;
 	}
 }
 void drawPockets()
@@ -221,8 +218,8 @@ void checkCollisions(){
 
 		if ( !balls[i]->isInHole  && !balls[j]->isInHole && balls[i]->isBallHit(balls[j]) ){
 			balls[i]->resolve(balls[j]);
-			//balls[i]->dt+=balls[i]->velocity.length();
-		//	balls[j]->dt+=balls[j]->velocity.length();
+			balls[i]->dt=balls[i]->velocity.length();
+			balls[j]->dt=balls[j]->velocity.length();
 
 			}
 		//ok
@@ -236,9 +233,9 @@ void strikeBall(){
 	cueVel.x= balls[0]->position.x-cue.x;
 	cueVel.y=balls[0]->position.y-cue.y;
 	cueVel.normalize();
-	cueVel.x = cueVel.x* (float)(force/100);
-	cueVel.y = cueVel.y* (float)(force/100);
-	cueVel.z = cueVel.z* (float)(force/100);
+	cueVel.x = cueVel.x* (GLfloat)(force/100);
+	cueVel.y = cueVel.y* (GLfloat)(force/100);
+	cueVel.z = cueVel.z* (GLfloat)(force/100);
 	balls[0]->velocity = cueVel;
 	balls[0]->dt=balls[0]->velocity.length();
 }
