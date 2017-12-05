@@ -41,7 +41,7 @@ void setupBalls(GLint radius, int numOfBalls)
 	}
 	int x = window_width/3-2*border;
 	int y = 245;
-	balls[0]->position.set(x, y, 0);
+	balls[0]->position.set(x, y+25, 0);
 
 	x = x * 3-80;
 	int counter = 0;
