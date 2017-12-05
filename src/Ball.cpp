@@ -10,6 +10,8 @@ Ball::Ball()
 	this->yBorder=40;
 	this->xBorder1=940;
 	this->yBorder1=490;
+	this->dt=1.5;
+	this->lastFrame=0;
 }
 bool Ball::isBallHit(Ball* b){
 	GLfloat length = this->position.distance(b->position);
@@ -76,14 +78,14 @@ bool Ball::hitRight(){
 	}
 }
 bool Ball::hitTop(){
-	if(this->position.y > this->yBorder1+this->radius){
+	if(this->position.y > this->yBorder1-this->radius){
 		return true;
 	}else{
 		return false;
 	}
 }
 bool Ball::hitBot(){
-	if(this->position.y <this->yBorder-this->radius){
+	if(this->position.y <this->yBorder+this->radius){
 		return true;
 	}else{
 		return false;

@@ -7,6 +7,7 @@ class Ball
 {
 	public:
 		GLint xBorder,yBorder,xBorder1,yBorder1,lastFrame;
+		GLfloat dt;
 		Ball();;
 		Vector position;
 		Vector velocity;

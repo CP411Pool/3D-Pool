@@ -148,9 +148,14 @@ void drawBalls()
 	}
 }
 void update(){
-	float dt= 1.3f;
+	float d;
+	float dt;
 	for (int i=0; i<NUM_OF_BALLS; ++i){
-		if ( balls[i]->velocity.length() < 0.02){
+
+
+
+		float dt=balls[i]->dt;
+		if ( balls[i]->velocity.length()< 0.02){
 			balls[i]->velocity.x = 0.0;
 		balls[i]->velocity.y = 0.0;
 		balls[i]->velocity.z = 0.0;
@@ -161,7 +166,6 @@ void update(){
 			acc.x = balls[i]->velocity.x*-0.1f;
 			acc.y = balls[i]->velocity.y*-0.1f;
 			acc.z = balls[i]->velocity.z*-0.1f;
-
 			balls[i]->velocity.x = balls[i]->velocity.x + acc.x*dt;
 			balls[i]->velocity.y = balls[i]->velocity.y + acc.y*dt;
 			balls[i]->velocity.z = balls[i]->velocity.z + acc.z*dt;
@@ -169,10 +173,13 @@ void update(){
 		}
 		//float stepLength = balls[i]->velocity.length()*dt;
 		//float rotateAngle = stepLength*180/(M_PI*balls[i]->radius);
-		if (balls[i]->position.y > 0.22)
+		if ( balls[i]->isInHole==false && dt>0.02){
 			balls[i]->position.x = balls[i]->position.x +  balls[i]->velocity.x*dt;
 			balls[i]->position.y = balls[i]->position.y +  balls[i]->velocity.y*dt;
 			balls[i]->position.z = balls[i]->position.z +  balls[i]->velocity.z*dt;
+		}
+		balls[i]->dt=dt+0.03;
+
 
 	}
 }
@@ -205,11 +212,11 @@ void resolveTable(Ball *ball){
 
 		if ( ball->hitTop()){
 			ball->velocity.y = -ball->velocity.y;
-			ball->position.y = yBorder2 + ball->radius;
+			ball->position.y = yBorder2 - ball->radius;
 		} else
 		if (ball->hitBot()){
 			ball->velocity.y = -ball->velocity.y;
-			ball->position.y = yBorder1 - ball->radius;
+			ball->position.y = yBorder1 + ball->radius;
 		}
 }
 void checkCollisions(){
@@ -217,6 +224,10 @@ void checkCollisions(){
 		for (int j=i+1; j< NUM_OF_BALLS; ++j){
 			if ( !balls[i]->isInHole  && !balls[j]->isInHole && balls[i]->isBallHit(balls[j]) ){
 				balls[i]->resolve(balls[j]);
+
+				balls[i]->dt=balls[i]->velocity.length();
+				balls[j]->dt=balls[j]->velocity.length();
+
 			}
 		}
 		if ( !balls[i]->isInHole ) resolveTable(balls[i]);
@@ -233,6 +244,7 @@ void strikeBall(){
 	cueVel.y = cueVel.y* (float)(force/100);
 	cueVel.z = cueVel.z* (float)(force/100);
 	balls[0]->velocity = cueVel;
+	balls[0]->dt=balls[0]->velocity.length();
 }
 void resetGame()
 {
@@ -246,7 +258,11 @@ void init()
 	gluOrtho2D(0.0, window_width, window_height, 0.0);
 	glFlush();
 	setupGame();
-
+	printf("                 HOTKEYS                   \n");;
+		printf("*******************************************\n");
+		printf("*  Press the 'r' key to reset the game    *\n");
+		printf("*  Press the 'esc' key to close the game  *\n");
+		printf("*******************************************\n");
 }
 void keyboard(unsigned char key, int x, int y)
 {
@@ -300,10 +316,9 @@ void hitCue(){
 }*/
 
 void mouseMotion(GLint x, GLint y) {
-	if(onTable(x,y)==true){
 				xBegin=x;
 				yBegin=y;
-	}
+
 	if (isMoving) {
 		//BALL HIT HERE
 
@@ -363,11 +378,7 @@ int main( int argc, char** argv)
 	glutKeyboardFunc(keyboard);
 	//glutReshapeFunc(reshape);
 	Timer(0);
-	printf("                 HOTKEYS                   \n");;
-	printf("*******************************************\n");
-	printf("*  Press the 'r' key to reset the game    *\n");
-	printf("*  Press the 'esc' key to close the game  *\n");
-	printf("*******************************************\n");
+
 
 	glutMainLoop();
 }
