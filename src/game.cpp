@@ -327,6 +327,11 @@ void reshape(GLint newWidth, GLint newHeight)
 	window_height = newHeight;
 	glFlush();
 }
+static void Timer(int value){
+	ticks++;
+    glutTimerFunc(100, Timer, 0);
+
+}
 int main( int argc, char** argv)
 {
 	glutInit(&argc, argv);
@@ -340,6 +345,8 @@ int main( int argc, char** argv)
 	glutPassiveMotionFunc(mouseMotion);
 	glutMouseFunc(mouseAction);
 	//glutReshapeFunc(reshape);
+	Timer(0);
+
 	glutMainLoop();
 }
 

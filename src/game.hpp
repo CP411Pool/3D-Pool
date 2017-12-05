@@ -14,6 +14,8 @@
 #include "Cue.hpp"
 #define NUM_OF_BALLS 16
 #define NUM_OF_POCKETS 6
+GLint ticks=0;
+
 const int border = 40;
 GLint window_width = 980;
 GLint window_height = (window_width / 2) + border;
@@ -34,5 +36,5 @@ void mouseAction(GLint button, GLint state, GLint x, GLint y);
 void mouseMotion(GLint x, GLint y);
 void strikeBall();
 void checkCollisions();
-
+void ticker();
 #endif /* 3D_POOL_SRC_GAME_HPP_ */
