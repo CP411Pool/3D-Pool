@@ -5,4 +5,9 @@
 Ball::Ball() :position(), velocity()
 {
 }
+Ball::isBallHit(Ball *ball){
 
+}
+Ball::resToBallHit(Ball *ball){
+
+}
