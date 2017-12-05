@@ -35,9 +35,9 @@ void Ball::resolve(Ball* b){
 	v1norm.z = normal.z * normal.dot(this->velocity);
 	v1temp=v1.minus(v1norm);
 
-	normal.x*=-1.0;
-	normal.y*=-1.0;
-	normal.z*=-1.0;
+	normal.x*=-1.0f;
+	normal.y*=-1.0f;
+	normal.z*=-1.0f;
 
 	v2=b->velocity;
 	v2norm.x = normal.x * normal.dot(v2);
@@ -55,8 +55,8 @@ void Ball::resolve(Ball* b){
 
 
 	this->position.x=this->position.x + normal.x*tmp;
-	this->position.y=this->position.y+normal.y*tmp;
-	this->position.z=this->position.z+normal.z*tmp;
+	this->position.y=this->position.y +normal.y*tmp;
+	this->position.z=this->position.z +normal.z*tmp;
 
 	b->position.x=b->position.x - normal.x*tmp;
 	b->position.y=b->position.y -normal.y*tmp;

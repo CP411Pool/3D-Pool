@@ -148,15 +148,12 @@ void drawBalls()
 	}
 }
 void update(){
-	float d;
-	float dt;
+	float dt,d;
+	dt=0.05;
 	for (int i=0; i<NUM_OF_BALLS; ++i){
 
-
-
-		dt=balls[i]->dt;
-
-		if ( balls[i]->velocity.length()< 0.02){
+		dt=balls[i]->velocity.length();
+		if ( dt< 0.02){
 			balls[i]->velocity.x = 0.0;
 		balls[i]->velocity.y = 0.0;
 		balls[i]->velocity.z = 0.0;
@@ -172,12 +169,12 @@ void update(){
 			balls[i]->velocity.z = balls[i]->velocity.z + acc.z*dt;
 
 		}
-		if ( balls[i]->isInHole==false && balls[i]->velocity.length()>0.02){
+		if (balls[i]->position.y>40.0){
 			balls[i]->position.x = balls[i]->position.x +  balls[i]->velocity.x*dt;
 			balls[i]->position.y = balls[i]->position.y +  balls[i]->velocity.y*dt;
 			balls[i]->position.z = balls[i]->position.z +  balls[i]->velocity.z*dt;
 		}
-		balls[i]->dt=dt+0.03;
+
 
 
 	}
@@ -224,8 +221,8 @@ void checkCollisions(){
 
 		if ( !balls[i]->isInHole  && !balls[j]->isInHole && balls[i]->isBallHit(balls[j]) ){
 			balls[i]->resolve(balls[j]);
-				balls[i]->dt-=balls[j]->velocity.length()/20;
-				balls[j]->dt-=balls[i]->velocity.length()/20;
+			//balls[i]->dt+=balls[i]->velocity.length();
+		//	balls[j]->dt+=balls[j]->velocity.length();
 
 			}
 		//ok
@@ -329,6 +326,8 @@ void mouseMotion(GLint x, GLint y) {
 void display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
+	update();
+
 	checkCollisions();
 	drawTable();
 		drawBalls();
@@ -339,7 +338,6 @@ void display()
 
 		}
 
-update();
 
 
 	glFlush();

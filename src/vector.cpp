@@ -37,7 +37,7 @@ Vector Vector::add(Vector v){
 	return Vector(this->x+v.x,this->y+v.y,0);
 }
 GLfloat Vector::distance(Vector v){
-	return sqrt(pow(this->x-v.x,2)+pow(this->y-v.y,2));
+	return sqrt(pow(this->x-v.x,2)+pow(this->y-v.y,2)+pow(this->z-v.z,2));
 }
 
 
@@ -56,7 +56,7 @@ void Vector::build4tuple(float v[]){
 	v[0] = x; v[1] = y; v[2] = z; v[3] = 0.0f;
 }
 GLfloat Vector::length(){
-	return  sqrt(pow(this->x,2)+pow(this->y,2));
+	return  sqrt(pow(this->x,2)+pow(this->y,2)+pow(this->z,2));
 }
 
 void Vector::normalize(){
