@@ -181,14 +181,14 @@ void setupGame()
 }
 
 void mouseAction(GLint button, GLint state, GLint xMouse, GLint yMouse) {
-	xBegin=xMouse;
-	yBegin=yMouse;
+
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
 		moving = 1;
-
+		isMoving=true;
 	}
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
 		moving = 0;
+		isMoving=false;
 	}
 
 
@@ -205,19 +205,16 @@ void setPixel(GLint x, GLint y){
 void movement(void){
 
 }
+void hitCue(){
+	Vector cueVel = new Vector();
+}
 void mouseMotion(GLint x, GLint y) {
 	if(onTable(x,y)==true){
 				xBegin=x;
 				yBegin=y;
 	}
-	if (moving) {
-
-		//comment
-		if(onTable(x,y)==true){
-			xBegin=x;
-			yBegin=y;
-
-		}
+	if (isMoving) {
+		//BALL HIT HERE
 	}
 
 	glutPostRedisplay();
@@ -231,10 +228,9 @@ void display()
 		drawBalls();
 		drawPockets();
 		printf("x:%f,y:%f",xBegin,yBegin);
-		if(xBegin!=0 && !moving){
+		if(xBegin!=0 && !isMoving){
 			cue.draw(*balls[0],xBegin,yBegin);
-		}
-		if(moving){
+		}else{
 
 		}
 
