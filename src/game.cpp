@@ -6,6 +6,7 @@
 #include <GL/glut.h>
 
 
+
 GLfloat winWidth = window_width - 2 * border;
 GLfloat winHeight = window_height - 2 * border;
 GLint length=winWidth,width=winWidth/2;
@@ -35,7 +36,7 @@ void setupBalls(GLint radius, int numOfBalls)
 	}
 	int x = window_width/3-2*border;
 	int y = 245;
-	balls[0]->position=glm::vec2(x, y);
+	balls[0]->position.set(x, y, 0);
 
 	x = x * 3-80;
 	int counter = 0;
@@ -47,7 +48,7 @@ void setupBalls(GLint radius, int numOfBalls)
 			counter = 0;
 		}
 
-		balls[i]->position=glm::vec2(x, y + 2 * counter * radius+2*radius);
+		balls[i]->position.set(x, y + 2 * counter * radius+2*radius, 0);
 		counter++;
 	}
 }
@@ -69,7 +70,7 @@ void setupPockets(float radius, int numOfPockets)
 			y = width;
 		}
 
-		pockets[i]->position=glm::vec2(x, y);
+		pockets[i]->position.set(x, y, 0);
 		x = x + width;
 	}
 
@@ -204,8 +205,11 @@ void setPixel(GLint x, GLint y){
 void movement(void){
 
 }
+/*
 void hitCue(){
-}
+	Vector cueVel = new Vector();
+}*/
+
 void mouseMotion(GLint x, GLint y) {
 	if(onTable(x,y)==true){
 				xBegin=x;
