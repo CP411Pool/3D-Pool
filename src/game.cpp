@@ -52,6 +52,7 @@ void setupBalls(GLint radius, int numOfBalls)
 		counter++;
 	}
 }
+
 void setupPockets(float radius, int numOfPockets)
 {
 	for (int i = 0; i < numOfPockets; i++)
@@ -141,7 +142,35 @@ void drawBalls()
 		glPopMatrix();
 	}
 }
+void update(){
+	float dt= 0.05;
+	for (int i=0; i<NUM_OF_BALLS; ++i){
+		if ( balls[i]->velocity.length() < 0.02){
+			balls[i]->velocity.x = 0.0;
+		balls[i]->velocity.y = 0.0;
+		balls[i]->velocity.z = 0.0;
+		}
+		else {
+			balls[i]->velocity.normalize();
+			Vector acc;
+			acc.x = balls[i]->velocity.x*-0.1f;
+			acc.y = balls[i]->velocity.y*-0.1f;
+			acc.z = balls[i]->velocity.z*-0.1f;
 
+			balls[i]->velocity.x = balls[i]->velocity.x + acc.x*dt;
+			balls[i]->velocity.y = balls[i]->velocity.y + acc.y*dt;
+			balls[i]->velocity.z = balls[i]->velocity.z + acc.z*dt;
+
+		}
+		float stepLength = balls[i]->velocity.length()*dt;
+		float rotateAngle = stepLength*180/(M_PI*balls[i]->radius);
+		if (balls[i]->position.y > 0.22)
+			balls[i]->position.x = balls[i]->position.x +  balls[i]->velocity.x*dt;
+			balls[i]->position.y = balls[i]->position.y +  balls[i]->velocity.y*dt;
+			balls[i]->position.z = balls[i]->position.z +  balls[i]->velocity.z*dt;
+
+	}
+}
 void drawPockets()
 {
 	for (int i = 0; i < NUM_OF_POCKETS; i++)
@@ -157,6 +186,26 @@ void drawPockets()
 		}
 		glPopMatrix();
 	}
+
+}
+void checkCollisions(){
+	for (int i=0; i< NUM_OF_BALLS; ++i){
+		for (int j=i+1; j< NUM_OF_BALLS; ++j){
+			if ( !balls[i]->isInHole  && !balls[j]->isInHole && balls[i]->isBallHit(balls[j]) ){
+				balls[i]->resolve(balls[j]);
+			}
+		}
+		//if ( !balls[i]->isInHole ) table.resToBallHitTable(balls[i]);
+	}
+}
+void strikeBall(){
+	Vector cueVel = balls[0]->position;
+			//Vector(position.x, table.heigh + balls[0]->radius, position.z);
+	cueVel.normalize();
+	cueVel.x = cueVel.x* (float)(force/100);
+	cueVel.y = cueVel.y* (float)(force/100);
+	cueVel.z = cueVel.z* (float)(force/100);
+	balls[0]->velocity = cueVel;
 }
 void resetGame()
 {
@@ -180,10 +229,12 @@ void setupGame()
 	setupPockets(pocket_radius, NUM_OF_POCKETS);
 }
 
+
 void mouseAction(GLint button, GLint state, GLint xMouse, GLint yMouse) {
 
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
 		moving = 1;
+		strikeBall();
 		isMoving=true;
 	}
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
@@ -217,6 +268,7 @@ void mouseMotion(GLint x, GLint y) {
 	}
 	if (isMoving) {
 		//BALL HIT HERE
+
 	}
 
 	glutPostRedisplay();
@@ -225,18 +277,17 @@ void mouseMotion(GLint x, GLint y) {
 void display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-
+	checkCollisions();
 	drawTable();
 		drawBalls();
 		drawPockets();
-		printf("x:%f,y:%f",xBegin,yBegin);
 		if(xBegin!=0 && !isMoving){
 			cue.draw(*balls[0],xBegin,yBegin);
 		}else{
 
 		}
 
-
+update();
 
 
 	glFlush();

@@ -21,7 +21,7 @@ GLfloat radius = 12;
 GLfloat pocket_radius = 20;
 bool isMoving = false;
 GLint moving = 0,xBorder1=40,yBorder1=40;
-GLfloat xBegin,yBegin;
+GLfloat xBegin,yBegin,force=50;
 Ball *balls[NUM_OF_BALLS];
 Ball *pockets[NUM_OF_POCKETS];
 Cue cue;
@@ -32,6 +32,7 @@ void display(void);;
 void reshape(int width, int height);
 void mouseAction(GLint button, GLint state, GLint x, GLint y);
 void mouseMotion(GLint x, GLint y);
-
+void strikeBall();
+void checkCollisions();
 
 #endif /* 3D_POOL_SRC_GAME_HPP_ */

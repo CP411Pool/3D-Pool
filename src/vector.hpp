@@ -25,7 +25,8 @@ class Vector {
 	void printVector();
 	Vector minus(Vector);
 	Vector add(Vector );
-	GLint distance(Vector);
+	GLfloat distance(Vector);
+	GLfloat length();
 };
 
 #endif

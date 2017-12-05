@@ -9,6 +9,10 @@ class Ball
 		Ball();;
 		Vector position;
 		Vector velocity;
+		bool isBallHit(Ball *b);
+		void resolve(Ball *b);
+		GLfloat radius;
+		bool isInHole;
 };
 
 #endif
