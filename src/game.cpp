@@ -154,7 +154,8 @@ void update(){
 
 
 
-		float dt=balls[i]->dt;
+		dt=balls[i]->dt;
+
 		if ( balls[i]->velocity.length()< 0.02){
 			balls[i]->velocity.x = 0.0;
 		balls[i]->velocity.y = 0.0;
@@ -173,7 +174,7 @@ void update(){
 		}
 		//float stepLength = balls[i]->velocity.length()*dt;
 		//float rotateAngle = stepLength*180/(M_PI*balls[i]->radius);
-		if ( balls[i]->isInHole==false && dt>0.02){
+		if ( balls[i]->isInHole==false && balls[i]->velocity.length()>0.02){
 			balls[i]->position.x = balls[i]->position.x +  balls[i]->velocity.x*dt;
 			balls[i]->position.y = balls[i]->position.y +  balls[i]->velocity.y*dt;
 			balls[i]->position.z = balls[i]->position.z +  balls[i]->velocity.z*dt;
@@ -222,11 +223,19 @@ void resolveTable(Ball *ball){
 void checkCollisions(){
 	for (int i=0; i< NUM_OF_BALLS; ++i){
 		for (int j=i+1; j< NUM_OF_BALLS; ++j){
-			if ( !balls[i]->isInHole  && !balls[j]->isInHole && balls[i]->isBallHit(balls[j]) ){
-				balls[i]->resolve(balls[j]);
 
-				balls[i]->dt=balls[i]->velocity.length();
-				balls[j]->dt=balls[j]->velocity.length();
+		if ( !balls[i]->isInHole  && !balls[j]->isInHole && balls[i]->isBallHit(balls[j]) ){
+				GLfloat d1,d2,d3,d4;
+				d1=balls[i]->velocity.length();
+				d2=balls[j]->velocity.length();
+				d3=balls[i]->dt;
+				d4=balls[j]->dt;
+
+
+			balls[i]->resolve(balls[j]);
+
+				balls[i]->dt*=balls[i]->velocity.length();
+				balls[j]->dt*=balls[j]->velocity.length();
 
 			}
 		}
@@ -238,7 +247,6 @@ void strikeBall(){
 	Vector cueVel;
 	cueVel.x= balls[0]->position.x-cue.x;
 	cueVel.y=balls[0]->position.y-cue.y;
-			//Vector(position.x, table.heigh + balls[0]->radius, position.z);
 	cueVel.normalize();
 	cueVel.x = cueVel.x* (float)(force/100);
 	cueVel.y = cueVel.y* (float)(force/100);

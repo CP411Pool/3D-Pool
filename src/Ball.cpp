@@ -42,7 +42,7 @@ void Ball::resolve(Ball* b){
 	v2=b->velocity;
 	v2norm.x = normal.x * normal.dot(v2);
 	v2norm.y = normal.y * normal.dot(v2);
-	v2norm.y = normal.y * normal.dot(v2);
+	v2norm.z = normal.z * normal.dot(v2);
 	v2temp=v2.minus(v2norm);
 
 	this->velocity.x = v2norm.x +v1temp.x;
