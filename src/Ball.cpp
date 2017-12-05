@@ -10,7 +10,7 @@ Ball::Ball()
 	this->yBorder=40;
 	this->xBorder1=940;
 	this->yBorder1=490;
-	this->dt=1.0;
+	this->dt=1.0f;
 	this->lastFrame=0.0;//ok
 }
 bool Ball::isBallHit(Ball* b){

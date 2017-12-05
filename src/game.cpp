@@ -233,9 +233,8 @@ void strikeBall(){
 	cueVel.x= balls[0]->position.x-cue.x;
 	cueVel.y=balls[0]->position.y-cue.y;
 	cueVel.normalize();
-	cueVel.x = cueVel.x* (GLfloat)(force/100);
-	cueVel.y = cueVel.y* (GLfloat)(force/100);
-	cueVel.z = cueVel.z* (GLfloat)(force/100);
+	cueVel.x = cueVel.x* (GLfloat)3.0;
+	cueVel.y = cueVel.y* (GLfloat)3.0;
 	balls[0]->velocity = cueVel;
 	balls[0]->dt=balls[0]->velocity.length();
 }
@@ -329,11 +328,7 @@ void display()
 	drawTable();
 		drawBalls();
 		drawPockets();
-		if(xBegin!=0 && !isMoving){
 			cue.draw(*balls[0],xBegin,yBegin);
-		}else{
-
-		}
 
 
 
