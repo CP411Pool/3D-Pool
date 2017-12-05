@@ -6,6 +6,10 @@ Ball::Ball()
 {
 	this->isInHole=false;
 	this->radius=12;
+	this->xBorder=40;
+	this->yBorder=40;
+	this->xBorder1=940;
+	this->yBorder1=490;
 }
 bool Ball::isBallHit(Ball* b){
 	GLfloat length = this->position.distance(b->position);

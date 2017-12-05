@@ -6,7 +6,7 @@
 class Ball
 {
 	public:
-		GLint xBorder=40,yBorder=40,xBorder1=940,yBorder1=490;
+		GLint xBorder,yBorder,xBorder1,yBorder1;
 		Ball();;
 		Vector position;
 		Vector velocity;
