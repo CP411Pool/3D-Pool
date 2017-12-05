@@ -25,7 +25,7 @@ bool isMoving = false;
 GLint moving = 0,xBorder1=40,yBorder1=40;
 GLfloat xBegin,yBegin,force=300;
 Ball *balls[NUM_OF_BALLS];
-Ball *pockets[NUM_OF_POCKETS];
+Ball *pockets[NUM_OF_POCKETS];//ok
 Cue cue;
 void setupGame();
 void initLights(void);

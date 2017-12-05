@@ -50,7 +50,7 @@ Vector Vector::cross(Vector b) //return this cross b
 
 GLfloat Vector::dot(Vector b) {
 	return x * b.x + y * b.y + z * b.z;
-}
+}//ok
 
 void Vector::build4tuple(float v[]){
 	v[0] = x; v[1] = y; v[2] = z; v[3] = 0.0f;

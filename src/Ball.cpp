@@ -11,7 +11,7 @@ Ball::Ball()
 	this->xBorder1=940;
 	this->yBorder1=490;
 	this->dt=1.0;
-	this->lastFrame=0;
+	this->lastFrame=0;//ok
 }
 bool Ball::isBallHit(Ball* b){
 	GLfloat length = this->position.distance(b->position);
