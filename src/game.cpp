@@ -5,7 +5,12 @@
 #include <time.h>
 #include <GL/glut.h>
 
-
+/*                   HOTKEYS
+	*******************************************
+	*  Press the 'r' key to reset the game    *
+	*  Press the 'esc' key to close the game  *
+	*******************************************
+ */
 
 GLfloat winWidth = window_width - 2 * border;
 GLfloat winHeight = window_height - 2 * border;
@@ -162,8 +167,8 @@ void update(){
 			balls[i]->velocity.z = balls[i]->velocity.z + acc.z*dt;
 
 		}
-		float stepLength = balls[i]->velocity.length()*dt;
-		float rotateAngle = stepLength*180/(M_PI*balls[i]->radius);
+		//float stepLength = balls[i]->velocity.length()*dt;
+		//float rotateAngle = stepLength*180/(M_PI*balls[i]->radius);
 		if (balls[i]->position.y > 0.22)
 			balls[i]->position.x = balls[i]->position.x +  balls[i]->velocity.x*dt;
 			balls[i]->position.y = balls[i]->position.y +  balls[i]->velocity.y*dt;
@@ -243,10 +248,21 @@ void init()
 	setupGame();
 
 }
+void keyboard(unsigned char key, int x, int y)
+{
+	switch(key)
+	{
+		case 27: // Escape key
+			exit(0);
+			break;
+		case 114: // r key
+			resetGame();
+			break;
+	}
+}
 
 void setupGame()
 {
-
 	setupBalls(radius, NUM_OF_BALLS);
 	setupPockets(pocket_radius, NUM_OF_POCKETS);
 }
@@ -344,6 +360,7 @@ int main( int argc, char** argv)
 	glutDisplayFunc(display);
 	glutPassiveMotionFunc(mouseMotion);
 	glutMouseFunc(mouseAction);
+	glutKeyboardFunc(keyboard);
 	//glutReshapeFunc(reshape);
 	Timer(0);
 
