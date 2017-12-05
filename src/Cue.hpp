@@ -10,7 +10,7 @@
 
 class Cue{
 public:
-	GLfloat x,y;
+	GLfloat x,y,angle;
 	Cue();
 	void draw(Ball w,GLfloat,GLfloat);
 };

@@ -17,8 +17,8 @@
 const int border = 40;
 GLint window_width = 980;
 GLint window_height = (window_width / 2) + border;
-float radius = 12;
-float pocket_radius = 20;
+GLfloat radius = 12;
+GLfloat pocket_radius = 20;
 bool isMoving = false;
 GLint moving = 0,xBorder1=40,yBorder1=40;
 GLfloat xBegin,yBegin;

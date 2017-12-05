@@ -1,5 +1,5 @@
 
-#include "Vector.hpp"
+#include "vector.hpp"
 #include <math.h>
 #include <stdio.h>
 #include <iostream>
@@ -28,6 +28,16 @@ void Vector::set(Vector& v){
 	x = v.x;
 	y = v.y;
 	z = v.z;
+}
+
+Vector Vector::minus(Vector v){
+	return Vector(this->x-v.x,this->y-v.y,0);
+}
+Vector Vector::add(Vector v){
+	return Vector(this->x+v.x,this->y+v.y,0);
+}
+GLint Vector::distance(Vector v){
+	return sqrt(pow(this->x-v.x,2)+pow(this->y-v.y,2));
 }
 
 

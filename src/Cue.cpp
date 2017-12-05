@@ -7,7 +7,9 @@
 #include "Cue.hpp"
 #include <math.h>
 Cue::Cue(){
-
+this->x=0;
+this->y=0;
+this->angle=0;
 
 }
 void Cue::draw(Ball w,GLfloat x1, GLfloat y1){
@@ -31,6 +33,7 @@ void Cue::draw(Ball w,GLfloat x1, GLfloat y1){
 			glutPostRedisplay();
 			this->x=x0;
 			this->y=y0;
+			this->angle=angle;
 }
 
 

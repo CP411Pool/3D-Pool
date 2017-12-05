@@ -23,7 +23,9 @@ class Vector {
 	GLfloat dot(Vector b); 	//return this dotted with b
 	void build4tuple(GLfloat v[]); //v[0]=x,v[1]=y,v[2]=z,v[3]=0 for homogeneous
 	void printVector();
-
+	Vector minus(Vector);
+	Vector add(Vector );
+	GLint distance(Vector);
 };
 
 #endif
