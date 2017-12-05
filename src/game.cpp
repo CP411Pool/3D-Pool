@@ -160,6 +160,7 @@ void update(){
 			balls[i]->velocity.x = 0.0;
 		balls[i]->velocity.y = 0.0;
 		balls[i]->velocity.z = 0.0;
+		balls[i]->dt=1.0;
 		}
 		else {
 			balls[i]->velocity.normalize();
@@ -172,8 +173,6 @@ void update(){
 			balls[i]->velocity.z = balls[i]->velocity.z + acc.z*dt;
 
 		}
-		//float stepLength = balls[i]->velocity.length()*dt;
-		//float rotateAngle = stepLength*180/(M_PI*balls[i]->radius);
 		if ( balls[i]->isInHole==false && balls[i]->velocity.length()>0.02){
 			balls[i]->position.x = balls[i]->position.x +  balls[i]->velocity.x*dt;
 			balls[i]->position.y = balls[i]->position.y +  balls[i]->velocity.y*dt;
@@ -225,17 +224,9 @@ void checkCollisions(){
 		for (int j=i+1; j< NUM_OF_BALLS; ++j){
 
 		if ( !balls[i]->isInHole  && !balls[j]->isInHole && balls[i]->isBallHit(balls[j]) ){
-				GLfloat d1,d2,d3,d4;
-				d1=balls[i]->velocity.length();
-				d2=balls[j]->velocity.length();
-				d3=balls[i]->dt;
-				d4=balls[j]->dt;
-
-
 			balls[i]->resolve(balls[j]);
-
-				balls[i]->dt*=balls[i]->velocity.length();
-				balls[j]->dt*=balls[j]->velocity.length();
+				balls[i]->dt+=balls[j]->velocity.length()/20;
+				balls[j]->dt+=balls[i]->velocity.length()/20;
 
 			}
 		}
