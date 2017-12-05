@@ -363,6 +363,11 @@ int main( int argc, char** argv)
 	glutKeyboardFunc(keyboard);
 	//glutReshapeFunc(reshape);
 	Timer(0);
+	printf("                 HOTKEYS                   \n");;
+	printf("*******************************************\n");
+	printf("*  Press the 'r' key to reset the game    *\n");
+	printf("*  Press the 'esc' key to close the game  *\n");
+	printf("*******************************************\n");
 
 	glutMainLoop();
 }
