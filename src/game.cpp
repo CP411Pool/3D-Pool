@@ -160,7 +160,6 @@ void update(){
 			balls[i]->velocity.x = 0.0;
 		balls[i]->velocity.y = 0.0;
 		balls[i]->velocity.z = 0.0;
-		balls[i]->dt=1.0;
 		}
 		else {
 			balls[i]->velocity.normalize();
@@ -225,10 +224,11 @@ void checkCollisions(){
 
 		if ( !balls[i]->isInHole  && !balls[j]->isInHole && balls[i]->isBallHit(balls[j]) ){
 			balls[i]->resolve(balls[j]);
-				balls[i]->dt+=balls[j]->velocity.length()/20;
-				balls[j]->dt+=balls[i]->velocity.length()/20;
+				balls[i]->dt-=balls[j]->velocity.length()/20;
+				balls[j]->dt-=balls[i]->velocity.length()/20;
 
 			}
+		//ok
 		}
 		if ( !balls[i]->isInHole ) resolveTable(balls[i]);
 	}
