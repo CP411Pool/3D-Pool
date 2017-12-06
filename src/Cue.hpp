@@ -2,7 +2,7 @@
  * Cue.hpp
  *
  *  Created on: Dec 4, 2017
- *      Author: garre
+ *      Author: garrett parris
  */
 #ifndef CUE_H
 #define CUE_H

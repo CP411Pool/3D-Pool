@@ -13,9 +13,9 @@
  */
 
 /**
- * Garrett Parris 150668740  33 commits 4995 ++ 3646--
- * Keegan Ireland 150939580  16 commits 542++ 1106--
- * Gregory Murray 150236640   4 commits 468++ 267--
+ * Garrett Parris 150668740  33 commits
+ * Keegan Ireland 150939580  16 commits
+ * Gregory Murray 150236640   4 commits
  */
 
 
@@ -389,7 +389,7 @@ int main( int argc, char** argv)
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 	glutInitWindowSize(window_width, window_height);
 
-	glutCreateWindow("Billiard");
+	glutCreateWindow("Pool By William Ireland, Garrett Parris, Greg Murray");
 	init();
 
 	glutDisplayFunc(display);

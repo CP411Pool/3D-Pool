@@ -2,7 +2,7 @@
  * vector.hpp
  *
  *  Created on: Dec 3, 2017
- *      Author: Keega
+ *      Author: William Ireland
  */
 
 #ifndef CVECTOR_H

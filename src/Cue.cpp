@@ -2,7 +2,7 @@
  * Cue.cpp
  *
  *  Created on: Dec 4, 2017
- *      Author: garre
+ *      Author: garrett parris
  */
 #include "Cue.hpp"
 #include <math.h>
