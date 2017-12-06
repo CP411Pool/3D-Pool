@@ -10,7 +10,6 @@
 #include <GL/glut.h>
 #include <math.h>
 #include "Ball.hpp"
-#include "Table.hpp"
 #include "Cue.hpp"
 #define NUM_OF_BALLS 16
 #define NUM_OF_POCKETS 6

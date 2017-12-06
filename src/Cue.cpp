@@ -12,6 +12,7 @@ this->y=0;
 this->angle=0;
 
 }
+//garrett : draws the pool cue based on white ball coords.
 void Cue::draw(Ball w,GLfloat x1, GLfloat y1){
 	GLfloat x2=w.position.x,y2=w.position.y;
 

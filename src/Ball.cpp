@@ -13,6 +13,7 @@ Ball::Ball()
 	this->dt=1.0f;
 	this->lastFrame=0.0;//ok
 }
+//detects if ball is being hit by another ball
 bool Ball::isBallHit(Ball* b){
 	GLfloat length = this->position.distance(b->position);
 	if(length< 2*radius){
@@ -21,7 +22,7 @@ bool Ball::isBallHit(Ball* b){
 		return false;
 	}
 }
-
+//resolves the velocity of ball when hit
 void Ball::resolve(Ball* b){
 	float tmp;
 	Vector normal,tangent, v1, v2, v1norm,v1temp,v2norm,v2temp;

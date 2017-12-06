@@ -12,18 +12,18 @@
 	*******************************************
  */
 
+/**
+ * Garrett Parris 150668740  33 commits 4995 ++ 3646--
+ * Keegan Ireland 150939580  16 commits 542++ 1106--
+ * Gregory Murray 150236640   4 commits 468++ 267--
+ */
+
+
 GLfloat winWidth = window_width - 2 * border;
 GLfloat winHeight = window_height - 2 * border;
 GLint length=winWidth,width=winWidth/2;
-GLfloat xBorder2=winWidth+border, yBorder2=winHeight+border;
-Table *table;
-
-
-void setupTable(float length)
-{
-	table = new Table(length);
-
-}
+GLfloat xBorder2=winWidth+border, yBorder2=winHeight+border; // xborder2 yborder2 are the upper limits of the table
+// checks if x, y are on border
 bool onTable(GLint x, GLint y){
 	if(x>xBorder1 && y>yBorder1 && x <xBorder2 && y <yBorder2){
 		return true;
@@ -31,6 +31,7 @@ bool onTable(GLint x, GLint y){
 		return false;
 	}
 }
+//sets up array of ball objects
 void setupBalls(GLint radius, int numOfBalls)
 {
 	for (int i = 0; i < numOfBalls; i++)
@@ -55,7 +56,7 @@ void setupBalls(GLint radius, int numOfBalls)
 		counter++;
 	}
 }
-
+//sets up array of pocket objects (we use ball objects because theyre the same)
 void setupPockets(float radius, int numOfPockets)
 {
 	for (int i = 0; i < NUM_OF_POCKETS; i++)
@@ -80,6 +81,7 @@ void setupPockets(float radius, int numOfPockets)
 
 
 }
+//draws tables table and table borders
 void drawTable(){
 	glPushMatrix();
 	glColor3f(0.545, 0.271, 0.075);
@@ -95,6 +97,7 @@ void drawTable(){
 	glPopMatrix();
 }
 
+//draws circle given a radius
 void drawCircle(int bradius){
    glBegin(GL_POLYGON);
 
@@ -106,6 +109,7 @@ void drawCircle(int bradius){
 
    glEnd();
 }
+//draws the array of balls that have not been sunk into a pocket
 void drawBalls()
 {
 	for (int i = 0; i < NUM_OF_BALLS; i++)
@@ -145,6 +149,7 @@ void drawBalls()
 		glPopMatrix();
 	}
 }
+//updates ball positions for every velocity change
 void update(){
 
 	GLfloat dt;
@@ -172,6 +177,7 @@ void update(){
 		balls[i]->dt=balls[i]->velocity.length()+dt;
 	}
 }
+//draw the array of pockets
 void drawPockets()
 {
 	for (int i = 0; i < NUM_OF_POCKETS; i++)
@@ -189,7 +195,7 @@ void drawPockets()
 	}
 
 }
-
+//checks if ball is within radius of pocket , return true if a ball is "in" a pocket
 bool isBallInPocket(Ball* b){
 	for(int i = 0; i < NUM_OF_POCKETS; i++){
 		GLfloat length = pockets[i]->position.distance(b->position);
@@ -200,7 +206,8 @@ bool isBallInPocket(Ball* b){
 	}
 	return false;
 }
-
+//resolves ball to table border handling
+//checks if ball is hitting an edge then changes the velocity and position
 
 void resolveTable(Ball *ball){
 	if ( ball->hitLeft() ){
@@ -221,6 +228,7 @@ void resolveTable(Ball *ball){
 			ball->position.y = yBorder1 + ball->radius;
 		}
 }
+//check if balls are colliding
 void checkCollisions(){
 	for (int i=0; i< NUM_OF_BALLS; ++i){
 		for (int j=i+1; j< NUM_OF_BALLS; ++j){
@@ -236,21 +244,27 @@ void checkCollisions(){
 		if ( !balls[i]->isInHole ) resolveTable(balls[i]);
 	}
 }
+//hits the ball with the pool cue
 void strikeBall(){
 	Vector cueVel;
 	cueVel.x= balls[0]->position.x-cue.x;
 	cueVel.y=balls[0]->position.y-cue.y;
 	cueVel.normalize();
-	cueVel.x = cueVel.x* (GLfloat)5.0;
+	cueVel.x = cueVel.x* (GLfloat)5.0 ;
 	cueVel.y = cueVel.y* (GLfloat)5.0;
 	cueVel.z = cueVel.z* (GLfloat)5.0;
 	balls[0]->velocity = cueVel;
-	balls[0]->dt=balls[0]->velocity.length()+1;
+	balls[0]->dt=balls[0]->velocity.length();
 }
+//resets the game
 void resetGame()
 {
 	setupGame();
 }
+//check if a ball is in pocket, if yes set the ball to be in a hole, and out of the game.
+//if ball is white ball, reset the white ball to default position
+//if ball is black ball, reset the game (this is a rule in pool)
+//if ball is black ball and black ball is last ball, game is over
 void checkPockets(){
 	for(int i=0;i<NUM_OF_BALLS;i++){
 		if(isBallInPocket(balls[i])==true){
@@ -314,13 +328,7 @@ void mouseAction(GLint button, GLint state, GLint xMouse, GLint yMouse) {
 
 	glutPostRedisplay();
 }
-void setPixel(GLint x, GLint y){
-	glPointSize(2.0);
-	glBegin(GL_POINTS);
-	glVertex2i(x,y);
-	glEnd();
-	//glutPostRedisplay();
-}
+
 
 void movement(void){
 
